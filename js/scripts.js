@@ -1,32 +1,42 @@
-var numberCheck = function(number) {
-  var numberString = number.toString();
-  if (!numberString.match(/^[01]+$/)) {
-        alert("Please enter a binary number!");
-        return -1;
+var numberCheck = function (binary, base) {
+  var numberStr = binary.toString();
+  if (!numberStr.match(/^[01]+$/) && base.isNumeric) {
+    alert("Please enter a binary number");
   }
-  else {
-    return conversion(number);
-  }
+  else return conversionBinarytoD(binary);
 }
 
-var conversion = function (number){
+
+var conversionBinarytoD = function (binary) {
   var result = 0;
-  var string = number.toString().split("").reverse();
-  for( var i = 0; i<string.length; i++){
-    result += parseInt(string[i] * Math.pow(2,i));
+  var reversedArr = binary.toString().split("").reverse();
+  for (var i = 0; i < reversedArr.length; i++) {
+    result += reversedArr[i] * Math.pow(2, i);
   }
   return result;
 }
 
+var conversionDtoBase = function (decimal, base) {
+  var result = 0;
+  return result = decimal.toString(base);
 
-$(document).ready(function(){
-  $("#input").submit(function(event){
+}
+
+$(document).ready(function () {
+  $("#input").submit(function (event) {
     event.preventDefault();
-
     var inputNumber = parseInt($("#inputNumber").val());
-    $("#result").empty();
-    if (numberCheck(inputNumber) !== -1) {
-      $("#result").append(numberCheck(inputNumber));
+    var inputBase = parseInt($("#inputBase").val());
+    if (inputBase !== "") {
+      $("#result").empty();
+      $("#result").append(conversionDtoBase(numberCheck(inputNumber, inputBase), inputBase));
+      console.log(numberCheck(inputNumber, inputBase));
+      console.log(conversionDtoB(numberCheck(inputNumber, inputBase), inputBase));
     }
-  });
+    else {
+      $("#result").empty();
+      $("#result").append(numberCheck(inputNumber, inputBase));
+    }
+
+  })
 });
